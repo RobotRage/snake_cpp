@@ -11,7 +11,7 @@ void start();
 static int windowSizeX = 600;
 static int windowSizeY = 600;
 
-static int gridSize = 10;
+static int gridSize = 20;
 
 int snakeDirectionX;
 int snakeDirectionY;
@@ -157,7 +157,7 @@ bool checkBounds()
 		}
 	}
 
-	if ((snake[0].x >= windowSizeX - gridSize | snake[0].y >= windowSizeY - gridSize) | (snake[0].x <= gridSize | snake[0].y <= gridSize))
+	if ((snake[0].x >= windowSizeX | snake[0].y >= windowSizeY ) | (snake[0].x <= 0 | snake[0].y <= 0))
 	{
 		reset();
 	}
@@ -189,15 +189,12 @@ void moveSnake()
 	}
 }
 
-void spawnFruit()
+bool spawnFruit()
 {
 	
-	if (fruit.size() < 3)
+	if (fruit.size() < 5)
 	{
-		fruit.push_back(point());
-
-		
-		int posX = rand() % (windowSizeX - (gridSize*2)) + (gridSize * 2);
+		int posX = rand() % (windowSizeX - (gridSize * 2)) + (gridSize * 2);
 		int posY = rand() % (windowSizeY - (gridSize * 2)) + (gridSize * 2);
 
 		int leftOverX = posX % (gridSize * 2);
@@ -206,10 +203,19 @@ void spawnFruit()
 		int newPosX = posX - leftOverX;
 		int newPosY = posY - leftOverY;
 
-		fruit[fruit.size()-1].x = newPosX;
-		fruit[fruit.size()-1].y = newPosY;
+		for (int i = 0; i < snake.size(); i++)
+		{
+			if (newPosX == snake[i].x && newPosY == snake[i].y)
+			{
+				return false;
+			}
+		}
+		fruit.push_back(point());
 
+		fruit[fruit.size() - 1].x = newPosX;
+		fruit[fruit.size() - 1].y = newPosY;
 	}
+	return true;
 }
 
 int tickrate=15;
@@ -235,20 +241,20 @@ void start()
 	//instantiate point
 	mapBounds.push_back(point());
 	//set point coords
-	mapBounds[0].x = 5;
-	mapBounds[0].y = 5;
+	mapBounds[0].x = 0;
+	mapBounds[0].y = 0;
 
 	mapBounds.push_back(point());
-	mapBounds[1].x = 5;
-	mapBounds[1].y = windowSizeY - 5;
+	mapBounds[1].x = 0;
+	mapBounds[1].y = windowSizeY - 0;
 
 	mapBounds.push_back(point());
-	mapBounds[2].x = windowSizeX - 5;
-	mapBounds[2].y = windowSizeY - 5;
+	mapBounds[2].x = windowSizeX - 0;
+	mapBounds[2].y = windowSizeY - 0;
 
 	mapBounds.push_back(point());
-	mapBounds[3].x = windowSizeX - 5;
-	mapBounds[3].y = 5;
+	mapBounds[3].x = windowSizeX - 0;
+	mapBounds[3].y = 0;
 
 	//call reset to set init snake pos
 	reset();
