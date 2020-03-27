@@ -16,6 +16,8 @@ static int gridSize = 20;
 int snakeDirectionX;
 int snakeDirectionY;
 
+bool allowInput = true;
+
 struct point
 {
 	int x;
@@ -226,6 +228,7 @@ void mainloop()
 
 	if (tick >= tickrate)
 	{
+		allowInput = true;
 		if (checkBounds())
 		{
 			moveSnake();
@@ -329,10 +332,11 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	//left
 	if (key == 263 | key == 65 && action == GLFW_REPEAT | action == GLFW_PRESS)
 	{
-		if (snakeDirectionY != 0)
+		if (snakeDirectionY != 0 && allowInput)
 		{
 			snakeDirectionX = -1;
 			snakeDirectionY = 0;
+			allowInput = false;
 		}
 
 	}
@@ -340,30 +344,33 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	//right
 	if (key == 262 | key == 68 && action == GLFW_REPEAT | action == GLFW_PRESS)
 	{
-		if (snakeDirectionY != 0)
+		if (snakeDirectionY != 0 && allowInput)
 		{
 			snakeDirectionX = 1;
 			snakeDirectionY = 0;
+			allowInput = false;
 		}
 	}
 
 	//down
 	if (key == 264 | key == 83 && action == GLFW_REPEAT | action == GLFW_PRESS)
 	{
-		if (snakeDirectionX != 0)
+		if (snakeDirectionX != 0 && allowInput)
 		{
 			snakeDirectionX = 0;
 			snakeDirectionY = -1;
+			allowInput = false;
 		}
 	}
 
 	//up
 	if (key == 265 | key == 87 && action == GLFW_REPEAT | action == GLFW_PRESS)
 	{
-		if (snakeDirectionX != 0)
+		if (snakeDirectionX != 0 && allowInput)
 		{
 			snakeDirectionX = 0;
 			snakeDirectionY = 1;
+			allowInput = false;
 		}
 	}
 
