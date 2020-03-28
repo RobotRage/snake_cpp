@@ -136,8 +136,8 @@ void reset()
 void eatFruit()
 {
 	snake.push_back(point());
-	snake[snake.size() - 1].x = 200;
-	snake[snake.size() - 1].y = 200;
+	snake[snake.size() - 1].x = -20;
+	snake[snake.size() - 1].y = -20;
 }
 
 bool checkBounds()
@@ -188,13 +188,14 @@ void moveSnake()
 				snake[i].y +=  gridSize * snakeDirectionY;
 			}
 		}
+		allowInput = true;
 	}
 }
 
 bool spawnFruit()
 {
 	
-	if (fruit.size() < 5)
+	if (fruit.size() < 20)
 	{
 		int posX = rand() % (windowSizeX - (gridSize * 2)) + (gridSize * 2);
 		int posY = rand() % (windowSizeY - (gridSize * 2)) + (gridSize * 2);
@@ -224,11 +225,12 @@ int tickrate=15;
 int tick = 0;
 void mainloop()
 {
+	checkBounds();
 	tick++;
 
 	if (tick >= tickrate)
 	{
-		allowInput = true;
+		
 		if (checkBounds())
 		{
 			moveSnake();
@@ -319,6 +321,8 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int 
 	glfwTerminate();
 	return 0;
 }
+
+
 
 //key inputs
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
